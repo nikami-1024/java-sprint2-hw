@@ -1,5 +1,3 @@
-import java.util.spi.AbstractResourceBundleProvider;
-
 public class CashflowManager {
     String januaryReportFilepath = "m.202101.csv";
     String februaryReportFilepath = "m.202102.csv";
@@ -7,6 +5,7 @@ public class CashflowManager {
     String yearReportFilepath = "y.2021.csv";
     boolean isLoadedMonths = false;
     boolean isLoadedYear = false;
+    String separator = "==============================\n";
 
     MonthlyReport januaryReport;
     MonthlyReport februaryReport;
@@ -15,26 +14,25 @@ public class CashflowManager {
 
     public void loadMonthsReports() {
         januaryReport = new MonthlyReport(januaryReportFilepath);
-        System.out.println("Загружен месяц: " + januaryReport.monthName);
+        System.out.println("\nЗагружен месяц: " + januaryReport.monthName);
         februaryReport = new MonthlyReport(februaryReportFilepath);
         System.out.println("Загружен месяц: " + februaryReport.monthName);
         marchReport = new MonthlyReport(marchReportFilepath);
         System.out.println("Загружен месяц: " + marchReport.monthName);
         isLoadedMonths = true;
-        printSeparator();
+        System.out.println(separator);
     }
 
     public void loadYearReport() {
         yearReport = new YearlyReport(yearReportFilepath);
-        System.out.println("Загружен год: " + yearReport.yearName);
+        System.out.println("\nЗагружен год: " + yearReport.yearName);
         isLoadedYear = true;
-        printSeparator();
+        System.out.println(separator);
     }
 
     public void checkReports() {
         if (isLoadedMonths && isLoadedYear) {
             // сверка
-            boolean isCorrectCheck = true;
 
             boolean janSale = (januaryReport.getSaleSum() == yearReport.getSaleSum("01"));
             boolean janBuy = (januaryReport.getBuySum() == yearReport.getBuySum("01"));
@@ -43,9 +41,9 @@ public class CashflowManager {
             boolean marSale = (marchReport.getSaleSum() == yearReport.getSaleSum("03"));
             boolean marBuy = (marchReport.getBuySum() == yearReport.getBuySum("03"));
 
-            isCorrectCheck = janSale && janBuy && febSale && febBuy && marSale && marBuy;
+            boolean isCorrectCheck = janSale && janBuy && febSale && febBuy && marSale && marBuy;
 
-            System.out.println("Выполняется сверка отчётов...");
+            System.out.println("\nВыполняется сверка отчётов...");
             if (isCorrectCheck) {
                 System.out.println("Сверка успешно завершена!");
             } else {
@@ -74,44 +72,40 @@ public class CashflowManager {
                             marchReport.monthName + ": расхождения в расходах!");
                 }
             }
-            printSeparator();
+            System.out.println(separator);
         } else {
+            System.out.println();
             if (!isLoadedMonths) {
                 System.out.println("Месячные отчёты ещё не загружены.");
             }
             if (!isLoadedYear) {
                 System.out.println("Годовой отчёт ещё не загружен.");
             }
-            printSeparator();
+            System.out.println(separator);
         }
     }
 
     public void printMonthsInfo() {
         if (isLoadedMonths) {
+            System.out.println();
             januaryReport.printInfo();
-            printSeparator();
+            System.out.println(separator);
             februaryReport.printInfo();
-            printSeparator();
+            System.out.println(separator);
             marchReport.printInfo();
-            printSeparator();
+            System.out.println(separator);
         } else {
-            System.out.println("Месячные отчёты ещё не загружены.");
-            printSeparator();
+            System.out.println("\nМесячные отчёты ещё не загружены.");
+            System.out.println(separator);
         }
     }
 
     public void printYearInfo() {
         if (isLoadedYear) {
             yearReport.printInfo();
-            printSeparator();
         } else {
-            System.out.println("Годовой отчёт ещё не загружен.");
-            printSeparator();
+            System.out.println("\nГодовой отчёт ещё не загружен.");
         }
-    }
-
-    public static void printSeparator() {
-        System.out.println("==============================");
-        System.out.println();
+        System.out.println(separator);
     }
 }

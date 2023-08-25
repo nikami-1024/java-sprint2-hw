@@ -4,17 +4,16 @@ import java.util.HashMap;
 public class YearlyReport {
     int yearName;
     ArrayList<YearItem> items;
-    FileReader file = new FileReader();
 
     public YearlyReport(String filePath) {
         yearName = Integer.parseInt(filePath.substring(2, 6));
         items = new ArrayList<>();
 
-        ArrayList<String> lines = file.readFileContents(filePath);
+        ArrayList<String> lines = FileReader.readFileContents(filePath);
         for (int i = 1; i < lines.size(); i++) {
             String line = lines.get(i);
             String[] parts = line.split(","); // month,amount,is_expense
-            String month = parts[0];
+            String month = parts[0].trim();
             int amount = Integer.parseInt(parts[1]);
             boolean isExpense = Boolean.parseBoolean(parts[2]);
 
@@ -31,7 +30,6 @@ public class YearlyReport {
                     sum = item.amount;
                 }
             }
-            // sum = (item.month == monthCode && !item.isExpense) ? item.amount : sum;
         }
         return sum;
     }
@@ -44,7 +42,6 @@ public class YearlyReport {
                     sum = item.amount;
                 }
             }
-            // sum = (item.month == monthCode && item.isExpense) ? item.amount : sum;
         }
         return sum;
     }
@@ -84,7 +81,7 @@ public class YearlyReport {
         avgExpense = sumExpense / monthCounter;
         avgProfit = sumProfit / monthCounter;
 
-        System.out.println("Отчёт за " + yearName + " год:");
+        System.out.println("\nОтчёт за " + yearName + " год:");
         System.out.println("Помесячная прибыль:");
         for (String monthCode : profitByMonth.keySet()) {
             System.out.println(monthCodes.monthCodesMap.get(monthCode) + ": " +
@@ -93,6 +90,4 @@ public class YearlyReport {
         System.out.println("Средний расход: " + avgExpense);
         System.out.println("Средний доход: " + avgProfit);
     }
-
-
 }

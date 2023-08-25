@@ -5,11 +5,11 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         CashflowManager cashflowManager = new CashflowManager();
+        String separator = "==============================\n";
 
         // вывод приветствия
         System.out.println("Запуск приложения...");
-        System.out.println("Добро пожаловать!");
-        System.out.println();
+        System.out.println("Добро пожаловать!\n");
 
         // бесконечный вывод меню
         while (true) {
@@ -17,39 +17,30 @@ public class Main {
             int command = scanner.nextInt();
 
             if (command == 1) {         // 1 - Считать все месячные отчёты
-                System.out.println();
                 cashflowManager.loadMonthsReports();
             } else if (command == 2) {  // 2 - Считать годовой отчёт
-                System.out.println();
                 cashflowManager.loadYearReport();
             } else if (command == 3) {  // 3 - Сверить отчёты
-                System.out.println();
                 cashflowManager.checkReports();
             } else if (command == 4) {  // 4 - Вывести информацию обо всех месячных отчётах
-                System.out.println();
                 cashflowManager.printMonthsInfo();
             } else if (command == 5) {  // 5 - Вывести информацию о годовом отчёте
-                System.out.println();
                 cashflowManager.printYearInfo();
             } else if (command == 0) {  // 0 - Выход
-                System.out.println();
-                System.out.println("Для подтверждения выхода введите exit:");
+                System.out.println("\nДля подтверждения выхода введите exit:");
                 System.out.print(">> ");
                 String exit = scanner.next();
                 if (exit.equals("exit")) {
-                    System.out.println();
-                    System.out.println("Завершение работы приложения.");
-                    printSeparator();
+                    System.out.println("\nЗавершение работы приложения.");
+                    System.out.println(separator);
                     break;
                 } else {
-                    System.out.println();
-                    System.out.println("Выход отменён, возврат в основное меню.");
-                    printSeparator();
+                    System.out.println("\nВыход отменён, возврат в основное меню.");
+                    System.out.println(separator);
                 }
             } else {
-                System.out.println();
-                System.out.println("Такой команды нет, проверьте введённое значение и повторите ввод.");
-                printSeparator();
+                System.out.println("\nТакой команды нет, проверьте введённое значение и повторите ввод.");
+                System.out.println(separator);
             }
         }
     }
@@ -64,10 +55,4 @@ public class Main {
         System.out.println("0 - Выход");
         System.out.print(">> ");
     }
-
-    public static void printSeparator() {
-        System.out.println("==============================");
-        System.out.println();
-    }
 }
-

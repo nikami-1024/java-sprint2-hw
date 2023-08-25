@@ -3,9 +3,7 @@ import java.util.ArrayList;
 public class MonthlyReport {
     String monthName;
     String monthCode;
-
     ArrayList<MonthItem> items;
-    FileReader file = new FileReader();
 
     public MonthlyReport(String filePath) {
         MonthCodes monthCodes = new MonthCodes();
@@ -14,11 +12,11 @@ public class MonthlyReport {
         monthName = monthCodes.monthCodesMap.get(monthCode);
         items = new ArrayList<>();
 
-        ArrayList<String> lines = file.readFileContents(filePath);
+        ArrayList<String> lines = FileReader.readFileContents(filePath);
         for (int i = 1; i < lines.size(); i++) {
             String line = lines.get(i);
             String[] parts = line.split(","); // item_name,is_expense,quantity,unit_price
-            String itemName = parts[0];
+            String itemName = parts[0].trim();
             boolean isExpense = Boolean.parseBoolean(parts[1]);
             int quantity = Integer.parseInt(parts[2]);
             int price = Integer.parseInt(parts[3]);
@@ -47,10 +45,6 @@ public class MonthlyReport {
         }
         return sum;
     }
-
-
-
-
 
     public int getMaxSaleSum() {
         int biggestSaleSum = 0;
@@ -118,5 +112,4 @@ public class MonthlyReport {
         System.out.println("Самая большая трата: ");
         System.out.println(getMaxBuyTitle() + " " + getMaxBuySum());
     }
-
 }
